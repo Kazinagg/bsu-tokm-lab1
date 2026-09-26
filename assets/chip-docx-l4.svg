@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145 26" width="145" height="26" shape-rendering="crispEdges">
+  <rect x="1" y="1" width="143" height="24" fill="#140D24" stroke="#BD93F9" stroke-width="1.5"/>
+  <!-- Corner Notches -->
+  <rect x="1" y="1" width="3" height="3" fill="#BD93F9"/>
+  <rect x="141" y="1" width="3" height="3" fill="#BD93F9"/>
+  <rect x="1" y="22" width="3" height="3" fill="#BD93F9"/>
+  <rect x="141" y="22" width="3" height="3" fill="#BD93F9"/>
+  <text x="72" y="17" fill="#BD93F9" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="10" font-weight="bold" text-anchor="middle">
+    📄 Л4 Фролов.docx
+  </text>
+</svg>

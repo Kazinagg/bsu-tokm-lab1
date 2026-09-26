@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 26" width="110" height="26" shape-rendering="crispEdges">
+  <rect x="1" y="1" width="108" height="24" fill="#091A0C" stroke="#39FF14" stroke-width="1.5"/>
+  <rect x="1" y="1" width="3" height="3" fill="#39FF14"/>
+  <rect x="106" y="1" width="3" height="3" fill="#39FF14"/>
+  <rect x="1" y="22" width="3" height="3" fill="#39FF14"/>
+  <rect x="106" y="22" width="3" height="3" fill="#39FF14"/>
+  <circle cx="12" cy="13" r="3" fill="#39FF14"/>
+  <text x="58" y="17" fill="#39FF14" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">
+    СДАНА
+  </text>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 26" width="155" height="26" shape-rendering="crispEdges">
+  <rect x="1" y="1" width="153" height="24" fill="#1C1805" stroke="#FFE600" stroke-width="1.5"/>
+  <!-- Corner Notches -->
+  <rect x="1" y="1" width="3" height="3" fill="#FFE600"/>
+  <rect x="151" y="1" width="3" height="3" fill="#FFE600"/>
+  <rect x="1" y="22" width="3" height="3" fill="#FFE600"/>
+  <rect x="151" y="22" width="3" height="3" fill="#FFE600"/>
+  <text x="77" y="17" fill="#FFE600" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="10" font-weight="bold" text-anchor="middle">
+    📄 TetraVor.cbproj
+  </text>
+</svg>
