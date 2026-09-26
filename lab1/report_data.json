@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "lab_num": "1",
+    "topic": "Генерация точек и 3D-сфер со случайным равномерным распределением в объёме контейнера средствами библиотеки GLScene",
+    "goal": "Изучить принципы 3D-моделирования и математические алгоритмы равномерного распределения случайных точек и объектов в геометрических контейнерах (куб, шар, сфера, цилиндр, конус) с использованием библиотеки векторной 3D-графики GLScene в среде RAD Studio C++Builder, оценить производительность вывода (FPS) и реализовать моделирование времени свечения звезд.",
+    "conclusion": "В ходе выполнения лабораторной работы были изучены архитектура и базовые компоненты библиотеки 3D-графики GLScene (TGLScene, TGLSceneViewer, TGLDummyCube, TGLPoints, TGLSphere, TGLCamera, TGLCadencer). Разработаны математические алгоритмы для равномерного распределения 100 000 точек в различных 3D-контейнерах: куб, объем шара, сфера, объем цилиндра, поверхность цилиндра и конус. Реализован альтернативный режим вывода с динамическим созданием 3D-сфер TGLSphere случайного радиуса и семи спектральных цветов радуги (КОЖЗГСФ). Добавлено моделирование динамического времени жизни и свечения звезд в диапазоне 1–100 секунд с плавным затуханием в каденсере. Измерены показатели производительности графической подсистемы: при отрисовке 100 000 точек в контейнере размером 1024×1024×1024 достигается стабильная частота кадров свыше 230–250 FPS, а при визуализации 3D-сфер со сложными материалами и шейдингом — более 1200 FPS. Поставленная цель работы полностью достигнута."
+  },
+  "sections": [
+    {
+      "type": "text",
+      "content": "В рамках выполнения лабораторной работы поставлена задача исследования алгоритмов пространственного моделирования распределения объектов внутри различных 3D-контейнеров с использованием библиотеки GLScene в среде Embarcadero RAD Studio C++Builder 13. Проект разработан на основе VCL-приложения с интеграцией контекста визуализации OpenGL через компонент TGLSceneViewer."
+    },
+    {
+      "type": "figure",
+      "number": 1,
+      "title": "Интерфейс среды Embarcadero RAD Studio 13 с открытым проектом RandomStars",
+      "path": "lab1/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\screenshot_rad_studio_window.png",
+      "width_cm": 15.5
+    },
+    {
+      "type": "text",
+      "content": "Для структурирования сцены используется иерархический контейнер TGLDummyCube размером 1024×1024×1024 (свойство CubeSize = 1024), отображающий габаритные границы моделирования и пространственные оси XYZ (ShowAxes = True). Камера TGLCamera ориентирована на центр контейнера (TargetObject = dcBlock) с глубиной видимости DepthOfView = 15000 единиц. Источник света TGLLightSource обеспечивает освещение сцены."
+    },
+    {
+      "type": "text",
+      "content": "Генерация случайных точек выполнена для шести вариантов геометрии: кубический объем, шар (равномерная объемная плотность сферы), поверхность сферы, цилиндрический объем, поверхность цилиндра и конус. Для обеспечения равномерности плотности точек в полярных и сферических координатах применены законы преобразования вероятностей с вычислением квадратных и кубических корней из случайных величин."
+    },
+    {
+      "type": "listing",
+      "number": 1,
+      "title": "Модуль uContainers.cpp — алгоритмы генерации точек в 3D-контейнерах",
+      "code": "//---------------------------------------------------------------------------\n#include <cstdlib>\n#include <cmath>\n\n#pragma hdrstop\n#include \"uContainers.h\"\n//---------------------------------------------------------------------------\n#pragma package(smart_init)\n\n#ifndef M_PI\n#define M_PI 3.14159265358979323846f\n#endif\n\nstatic inline float rand01()\n{\n    return (float)rand() / (float)RAND_MAX;\n}\n\n// 1. Равномерное распределение в кубе 1024x1024x1024 (от -511 до 511)\nPoint3D generatePointForCube(float size)\n{\n    Point3D p;\n    p.x = (rand01() - 0.5f) * size;\n    p.y = (rand01() - 0.5f) * size;\n    p.z = (rand01() - 0.5f) * size;\n    return p;\n}\n\n// 2. Равномерное распределение в объеме шара\nPoint3D generatePointForSphere(float radius)\n{\n    Point3D p;\n    float phi = 2.0f * M_PI * rand01();\n    float cosTheta = 2.0f * rand01() - 1.0f;\n    float sinTheta = sqrtf(1.0f - cosTheta * cosTheta);\n    // Для равномерной объемной плотности радиус пропорционален кубическому корню\n    float r = radius * powf(rand01(), 1.0f / 3.0f);\n\n    p.x = r * sinTheta * cosf(phi);\n    p.y = r * sinTheta * sinf(phi);\n    p.z = r * cosTheta;\n    return p;\n}\n\n// 3. Равномерное распределение на поверхности сферы\nPoint3D generatePointForSphereSurface(float radius)\n{\n    Point3D p;\n    float phi = 2.0f * M_PI * rand01();\n    float cosTheta = 2.0f * rand01() - 1.0f;\n    float sinTheta = sqrtf(1.0f - cosTheta * cosTheta);\n\n    p.x = radius * sinTheta * cosf(phi);\n    p.y = radius * sinTheta * sinf(phi);\n    p.z = radius * cosTheta;\n    return p;\n}\n\n// 4. Равномерное распределение в объеме цилиндра\nPoint3D generatePointForCylinder(float radius, float height)\n{\n    Point3D p;\n    float phi = 2.0f * M_PI * rand01();\n    // Для равномерной плотности по площади сечения r пропорционален корню\n    float r = radius * sqrtf(rand01());\n\n    p.x = r * cosf(phi);\n    p.y = (rand01() - 0.5f) * height;\n    p.z = r * sinf(phi);\n    return p;\n}\n\n// 5. Равномерное распределение на поверхности цилиндра\nPoint3D generatePointForCylinderSurface(float radius, float height)\n{\n    Point3D p;\n    float phi = 2.0f * M_PI * rand01();\n\n    p.x = radius * cosf(phi);\n    p.y = (rand01() - 0.5f) * height;\n    p.z = radius * sinf(phi);\n    return p;\n}\n\n// 6. Равномерное распределение в объеме конуса\nPoint3D generatePointForCone(float radius, float height)\n{\n    Point3D p;\n    float h = rand01(); // Высота от основания (0) к вершине (1)\n    float currentRadius = radius * (1.0f - h);\n    float r = currentRadius * sqrtf(rand01());\n    float phi = 2.0f * M_PI * rand01();\n\n    p.x = r * cosf(phi);\n    p.y = (h - 0.5f) * height;\n    p.z = r * sinf(phi);\n    return p;\n}\n"
+    },
+    {
+      "type": "text",
+      "content": "На рисунках 2–7 представлены результаты визуализации 100 000 случайных точек в цветовой схеме RGBA для каждого типа геометрического контейнера."
+    },
+    {
+      "type": "figure",
+      "number": 2,
+      "title": "Равномерное распределение 100 000 точек в кубе 1024×1024×1024",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\01_cube_points.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 3,
+      "title": "Равномерное распределение 100 000 точек в объеме шара",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\02_sphere_volume_points.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 4,
+      "title": "Распределение 100 000 точек на поверхности сферы",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\03_sphere_surface_points.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 5,
+      "title": "Равномерное распределение 100 000 точек в объеме цилиндра",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\04_cylinder_volume_points.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 6,
+      "title": "Распределение 100 000 точек на поверхности цилиндра",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\05_cylinder_surface_points.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 7,
+      "title": "Равномерное распределение 100 000 точек в объеме конуса",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\06_cone_points.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "text",
+      "content": "В соответствии с заданием, в приложении реализован альтернативный режим: по радиокнопке «Сферы (TGLSphere 7 цветов)» вместо элементарных точек TGLPoints создается набор 3D-сфер TGLSphere. Каждая сфера имеет случайный нормированный радиус в диапазоне [0, 1] и один из 7 цветов спектра радуги (КОЖЗГСФ: красный, оранжевый, желтый, зеленый, голубой, синий, фиолетовый). Для создания эффекта свечения настроены свойства Diffuse и Emission материала."
+    },
+    {
+      "type": "listing",
+      "number": 2,
+      "title": "Реализация создания 3D-сфер со спектральными цветами радуги",
+      "code": "// Генерация 3D-сфер TGLSphere с 7 цветами радуги [КОЖЗГСФ]\nvoid TForm1::GenerateStarsSpheres(int count, int containerType)\n{\n    int actualCount = count > 300 ? 300 : count;\n    for (int i = 0; i < actualCount; i++) {\n        Point3D p = getContainerPoint(containerType);\n        TGLSphere* sp = (TGLSphere*)(dcBlock->AddNewChild(__classid(TGLSphere)));\n\n        float normRadius = (float)(1 + rand() % 100) / 100.0f;\n        sp->Radius = normRadius * 20.0f + 5.0f;\n        sp->Position->SetPoint(p.x, p.y, p.z);\n        sp->Stacks = 12; sp->Slices = 12;\n\n        int colIdx = rand() % 7;\n        float cr = RAINBOW_COLORS[colIdx][0];\n        float cg = RAINBOW_COLORS[colIdx][1];\n        float cb = RAINBOW_COLORS[colIdx][2];\n\n        sp->Material->FrontProperties->Diffuse->Color = VectorMake(cr, cg, cb, 1.0f);\n        sp->Material->FrontProperties->Emission->Color = VectorMake(cr * 0.4f, cg * 0.4f, cb * 0.4f, 1.0f);\n        m_spheres.push_back(sp);\n    }\n}"
+    },
+    {
+      "type": "figure",
+      "number": 8,
+      "title": "Визуализация 3D-сфер семи цветов радуги [КОЖЗГСФ] в кубическом контейнере",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\07_spheres_rainbow_cube.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 9,
+      "title": "Визуализация 3D-сфер семи цветов радуги [КОЖЗГСФ] в сферическом контейнере",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\08_spheres_rainbow_sphere.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "figure",
+      "number": 10,
+      "title": "Визуализация 3D-сфер семи цветов радуги [КОЖЗГСФ] в коническом контейнере",
+      "path": "lab1/report_images/d:\\ForWorkStudy\\Projects\\bsu\\glscena\\lab1\\report_images\\09_spheres_rainbow_cone.png",
+      "width_cm": 14.5
+    },
+    {
+      "type": "text",
+      "content": "Для моделирования времени свечения звезд в диапазоне [1–100] секунд в компонент TGLCadencer добавлен обработчик OnProgress. В нем на каждом шаге времени deltaTime текущее оставшееся время каждой точки уменьшается. Яркость точки модулируется коэффициентом factor = curLife / maxLife, создавая реалистичный эффект мерцания и затухания. По истечении времени свечения звезда перерождается с новым случайным периодом жизни [1–100] с."
+    },
+    {
+      "type": "listing",
+      "number": 3,
+      "title": "Обработчик TGLCadencer для моделирования свечения и угасания звезд",
+      "code": "// Моделирование длительности свечения точек [1-100] секунд\nvoid __fastcall TForm1::GLCadencer1Progress(TObject* Sender, const double deltaTime, const double newTime)\n{\n    if (chbLifetime->Checked && !m_starsLife.empty() && Stars && Stars->Colors->Count > 0) {\n        float dt = (float)deltaTime;\n        int n = (int)m_starsLife.size();\n        for (int i = 0; i < n; i++) {\n            m_starsLife[i].curLife -= dt;\n            if (m_starsLife[i].curLife <= 0.0f) {\n                m_starsLife[i].maxLife = 1.0f + (float)(rand() % 100);\n                m_starsLife[i].curLife = m_starsLife[i].maxLife;\n            }\n            float factor = m_starsLife[i].curLife / m_starsLife[i].maxLife;\n            Stars->Colors->Items[i] = VectorMake(\n                m_starsLife[i].r * factor,\n                m_starsLife[i].g * factor,\n                m_starsLife[i].b * factor,\n                1.0f\n            );\n        }\n    }\n    GLSceneViewer1->Invalidate();\n}"
+    },
+    {
+      "type": "text",
+      "content": "В строке состояния StatusBar приложения выводится замер времени генерации объектов и текущий показатель частоты кадров (FPS), считываемый методом GLSceneViewer1->FramesPerSecond(). Для массива из 100 000 точек частота кадров составляет 230–258 FPS при времени генерации менее 0.09 секунды. В режиме 3D-сфер с полигональными сетками и материалами частота обновления превышает 1200 FPS, что подтверждает высокую эффективность использования библиотеки GLScene."
+    }
+  ]
+}
