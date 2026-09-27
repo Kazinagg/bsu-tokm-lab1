@@ -1,3 +1,5 @@
+<div id="top"></div>
+
 <div align="center">
   <img src="assets/header-lab1.svg" width="100%" alt="ТОКМ // 3D GLScene Computer Modeling" />
 </div>
@@ -19,9 +21,11 @@
 
 <span id="dossier"></span>
 
-<div align="center">
-  <img src="assets/frame-dossier.svg" width="100%" alt="Академическое досье" />
-</div>
+<img src="assets/frame-dossier.svg" width="100%" alt="Академическое досье" />
+
+<table width="100%">
+<tr>
+<td width="2000">
 
 > Репозиторий лабораторных работ по дисциплине **«Теоретические основы компьютерного моделирования»** (ТОКМ) с использованием графической библиотеки **GLScene**, меш-генератора **TetGen 1.5** и физического движка **Newton Dynamics** в среде **Embarcadero RAD Studio C++Builder**.
 
@@ -34,9 +38,11 @@
 * **GitHub репозиторий**: <a href="https://github.com/Kazinagg/bsu-tokm-lab1"><img src="assets/chip-github.svg" height="24" alt="GitHub Repo" /></a>
 * **Стадия сдачи**: Лабораторные работы 1–1 (накопительный репозиторий)
 
-<div align="center">
-  <img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
-</div>
+</td>
+</tr>
+</table>
+
+<img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
 
 <br>
 
@@ -46,18 +52,22 @@
 
 <span id="repos"></span>
 
-<div align="center">
-  <img src="assets/frame-base-repos.svg" width="100%" alt="Базовые репозитории" />
-</div>
+<img src="assets/frame-base-repos.svg" width="100%" alt="Базовые репозитории" />
+
+<table width="100%">
+<tr>
+<td width="2000">
 
 В соответствии с требованиями преподавателя, базовые проекты изучены и отмечены звёздочками ⭐:
 
 1. <a href="https://github.com/glscene/GLXEngine"><img src="assets/chip-base-glx.svg" height="24" alt="GLXEngine" /></a> — графический движок на базе OpenGL для C++Builder и Delphi.
 2. <a href="https://github.com/glscene/AstrobloQ"><img src="assets/chip-base-astro.svg" height="24" alt="AstrobloQ" /></a> — система компьютерного моделирования астрономических объектов и плагинов лаб на C++Builder.
 
-<div align="center">
-  <img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
-</div>
+</td>
+</tr>
+</table>
+
+<img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
 
 <br>
 
@@ -67,9 +77,11 @@
 
 <span id="plan"></span>
 
-<div align="center">
-  <img src="assets/frame-plan.svg" width="100%" alt="Состав репозитория" />
-</div>
+<img src="assets/frame-plan.svg" width="100%" alt="Состав репозитория" />
+
+<table width="100%">
+<tr>
+<td width="2000">
 
 | № | Наименование лабораторной работы | Статус | Исходный код | Отчет (.docx) |
 |:---:|---|:---:|:---:|:---:|
@@ -80,9 +92,11 @@
 > **Групповой проект RAD Studio C++Builder:** В репозитории размещен файл [`kommod.groupproj`](kommod.groupproj) (а также зеркальный `tokm.groupproj`), сконфигурированный для одновременной компиляции всех активных лабораторных работ (ЛР №1) в единой рабочей среде.
 
 
-<div align="center">
-  <img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
-</div>
+</td>
+</tr>
+</table>
+
+<img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
 
 <br>
 
@@ -92,9 +106,11 @@
 
 <span id="lab1"></span>
 
-<div align="center">
-  <img src="assets/frame-lab1.svg" width="100%" alt="Лабораторная работа 1" />
-</div>
+<img src="assets/frame-lab1.svg" width="100%" alt="Лабораторная работа 1" />
+
+<table width="100%">
+<tr>
+<td width="2000">
 
 <div align="left">
   <b>Файлы работы:</b>
@@ -127,10 +143,11 @@
    - Для массива из 100 000 точек частота кадров составляет 230–258 FPS при времени генерации менее 0.09 с;
    - В режиме полигональных 3D-сфер кадровая частота превышает 1200 FPS.
 
-<div align="center">
-  <img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
-</div>
+</td>
+</tr>
+</table>
 
+<img src="assets/frame-bottom.svg" width="100%" alt="Конец фрейма" />
 
 <br>
 
@@ -139,6 +156,10 @@
 </div>
 
 <span id="build"></span>
+
+<table width="100%">
+<tr>
+<td width="2000">
 
 ### 🛠️ Инструкция по сборке и запуску проектов
 
@@ -153,8 +174,14 @@ cd bsu-tokm-lab1
 * **Компилятор:** Embarcadero Clang 32-bit / 64-bit;
 * **Сборка через групповой проект:** откройте [`kommod.groupproj`](kommod.groupproj) в RAD Studio и выполните команду `Project -> Build All Projects`.
 
-<br>
+</td>
+</tr>
+</table>
+
+<br/>
 
 <div align="center">
-  <code>[SYS_EXIT: 0x00] // TOKM_GLSCENE_LABS // STAGE_1_READY // SESSION TERMINATED</code>
+  <a href="#top"><img src="assets/footer.svg" width="100%" alt="Вернуться к началу" /></a>
+  <br/><br/>
+  <sub>ТОКМ &bull; BelSU / НИУ «БелГУ» &bull; ФРОЛОВ А.А. &bull; 2026</sub>
 </div>
