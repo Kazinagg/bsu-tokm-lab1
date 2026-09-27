@@ -11,5 +11,5 @@
   <rect x="1" y="22" width="3" height="3" fill="#00C8D7"/>
   <rect x="89" y="22" width="3" height="3" fill="#00C8D7"/>
   <rect x="8" y="8" width="4" height="10" fill="#00C8D7"/>
-  <text x="49" y="17" fill="#00C8D7" text-anchor="middle" class="chip-text">✓ СДАНА</text>
+  <text x="49" y="17" fill="#00C8D7" text-anchor="middle" class="chip-text">📁 lab1/</text>
 </svg>

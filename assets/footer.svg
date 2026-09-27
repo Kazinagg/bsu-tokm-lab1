@@ -26,10 +26,10 @@
   <circle cx="26" cy="35" r="1.5" fill="#FFFFFF"/>
   <rect x="38" y="26" width="76" height="18" fill="rgba(15, 23, 38, 0.9)" stroke="#00C8D7" stroke-width="1"/>
   <text x="76" y="38" fill="#00C8D7" font-size="8.5" font-weight="bold" text-anchor="middle" class="font-mono">SYS_STATUS</text>
-  <text x="124" y="40" fill="#00C8D7" font-size="12" font-weight="bold" class="font-mono">SESSION_ACTIVE // LAB 1 READY</text>
+  <text x="124" y="40" fill="#00C8D7" font-size="12" font-weight="bold" class="font-mono">SESSION_ONLINE // LABS 1–1 READY</text>
 
   <!-- Secondary Diagnostics Sub-line -->
-  <text x="24" y="61" fill="#94A3B8" font-size="8.5" class="font-mono">DISCIPLINE: TOKM // STUDENT: FROLOV A.A. (12002531) // STAGE: 1/5</text>
+  <text x="24" y="61" fill="#94A3B8" font-size="8.5" class="font-mono">ДИСЦИПЛИНА: ТОКМ // СТУДЕНТ: ФРОЛОВ А.А. (12002531) // НИУ БЕЛГУ</text>
 
   <!-- Center PCB Pulse / Mini Matrix -->
   <g transform="translate(390, 30)">
@@ -48,7 +48,7 @@
     <rect x="177" y="0" width="3" height="3" fill="#00C8D7"/>
     <rect x="0" y="33" width="3" height="3" fill="#00C8D7"/>
     <rect x="177" y="33" width="3" height="3" fill="#00C8D7"/>
-    <text x="90" y="21" fill="#00C8D7" font-size="10.5" font-weight="bold" text-anchor="middle" class="font-mono">▲ RETURN TO TOP ▲</text>
+    <text x="90" y="21" fill="#00C8D7" font-size="10.5" font-weight="bold" text-anchor="middle" class="font-mono">▲ ВЕРНУТЬСЯ К ШАПКЕ ▲</text>
     <text x="90" y="31" fill="#94A3B8" font-size="7" text-anchor="middle" class="font-mono">[ CLICK TO RETURN ]</text>
   </g>
 
